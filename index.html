@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>days archive</title>
+  <meta name="description" content="days awesome archive">
+  <meta name="theme-color" content="#07090d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-view="home" class="is-gated">
+
+  <!-- click to enter (starts the music) -->
+  <div class="gate" id="gate" role="button" tabindex="0" aria-label="enter the site">
+    <p class="gate-text"><span id="gate-text" data-text="[ click to enter ]"></span><span class="cursor">_</span></p>
+    <p class="gate-hint">&#9835; sound on</p>
+  </div>
+
+  <!-- background scene -->
+  <div class="scene" aria-hidden="true">
+    <div class="sky"></div>
+    <div class="lamps">
+      <i class="lamp" style="--x:6%;  --y:9%;  --s:1.5; --c:var(--amber)"></i>
+      <i class="lamp" style="--x:17%; --y:17%; --s:1.1; --c:var(--amber)"></i>
+      <i class="lamp flicker" style="--x:26%; --y:26%; --s:.85; --c:var(--blue)"></i>
+      <i class="lamp" style="--x:33%; --y:31%; --s:.65; --c:var(--amber)"></i>
+      <i class="lamp" style="--x:38%; --y:36%; --s:.45; --c:var(--white)"></i>
+      <i class="lamp" style="--x:42%; --y:39%; --s:.3;  --c:var(--amber)"></i>
+      <i class="lamp" style="--x:57%; --y:31%; --s:.6;  --c:var(--white)"></i>
+      <i class="lamp" style="--x:63%; --y:25%; --s:.8;  --c:var(--blue)"></i>
+      <i class="lamp" style="--x:53%; --y:38%; --s:.3;  --c:var(--amber)"></i>
+      <i class="lamp flicker slow" style="--x:2%; --y:42%; --s:.7; --c:var(--blue)"></i>
+    </div>
+    <div class="ground"></div>
+    <div class="bg-media"></div>
+    <div class="fog fog-1"></div>
+    <div class="fog fog-2"></div>
+    <canvas class="rain"></canvas>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- home -->
+    <section class="view" data-view="home">
+      <p class="kicker" id="kicker">// archive //</p>
+      <h1 class="title"><span id="title-text">day</span><span class="cursor">_</span></h1>
+      <p class="sub" id="sub">days awesome archive</p>
+
+      <nav class="nav reveal">
+        <a href="#work" class="type">work</a>
+        <a href="#reviews" class="type">reviews</a>
+        <a href="#day" class="type">day</a>
+        <a href="#elsewhere" class="type">elsewhere</a>
+        <a href="#inquiries" class="type">inquiries</a>
+      </nav>
+    </section>
+
+    <!-- work -->
+    <section class="view view-wide" data-view="work">
+      <header class="view-head">
+        <a href="#" class="type back">&lt;- back</a>
+        <p class="kicker">// work //</p>
+        <span class="count" id="work-count"></span>
+      </header>
+      <ol class="work-list" id="work-list"></ol>
+      <p class="hint">past designs, oldest at the bottom. hover to peek.</p>
+    </section>
+
+    <!-- reviews (set in data.js) -->
+    <section class="view view-wide" data-view="reviews">
+      <header class="view-head">
+        <a href="#" class="type back">&lt;- back</a>
+        <p class="kicker">// reviews //</p>
+        <span class="count" id="reviews-count"></span>
+      </header>
+      <ul class="reviews" id="reviews-list"></ul>
+    </section>
+
+    <!-- day / about me (edit the text right here) -->
+    <section class="view view-wide" data-view="day">
+      <header class="view-head">
+        <a href="#" class="type back">&lt;- back</a>
+        <p class="kicker">// day //</p>
+        <span class="count"></span>
+      </header>
+      <div class="about">
+        <p><span class="prompt">&gt;</span> hey, i'm day.</p>
+        <p><span class="prompt">&gt;</span> current project: <a class="about-link" href="https://uffleague.github.io/#/" target="_blank" rel="noopener">UFF WEBSITE</a><span class="cursor">_</span></p>
+      </div>
+    </section>
+
+    <!-- elsewhere (links are set in data.js) -->
+    <section class="view view-wide" data-view="elsewhere">
+      <header class="view-head">
+        <a href="#" class="type back">&lt;- back</a>
+        <p class="kicker">// elsewhere //</p>
+        <span class="count"></span>
+      </header>
+      <ol class="work-list" id="elsewhere-list"></ol>
+      <p class="hint">say hi. i usually answer at night.</p>
+    </section>
+
+    <!-- inquiries (where messages go is set in data.js) -->
+    <section class="view view-wide" data-view="inquiries">
+      <header class="view-head">
+        <a href="#" class="type back">&lt;- back</a>
+        <p class="kicker">// inquiries //</p>
+        <span class="count"></span>
+      </header>
+      <form class="inq" id="inq" novalidate>
+        <h2 class="inq-title">have something in mind?</h2>
+        <p class="inq-sub">leave a message. i'll get back to you.</p>
+
+        <label class="field">
+          <span class="field-label">your name</span>
+          <input name="name" type="text" autocomplete="name" placeholder="john doe" required>
+        </label>
+        <div class="field field-chips field-contact">
+          <span class="field-label" id="contact-label">how should i contact you?</span>
+          <div class="chips" role="radiogroup" aria-labelledby="contact-label">
+            <label class="chip"><input type="radio" name="contact_method" value="email" checked><span>email</span></label>
+            <label class="chip"><input type="radio" name="contact_method" value="instagram"><span>instagram</span></label>
+            <label class="chip"><input type="radio" name="contact_method" value="text"><span>text</span></label>
+            <label class="chip"><input type="radio" name="contact_method" value="other"><span>other</span></label>
+          </div>
+          <input id="contact-input" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-labelledby="contact-label" required>
+        </div>
+        <div class="field field-chips" role="radiogroup" aria-labelledby="site-type-label">
+          <span class="field-label" id="site-type-label">what kind of site?</span>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="site_type" value="portfolio"><span>portfolio</span></label>
+            <label class="chip"><input type="radio" name="site_type" value="business"><span>business</span></label>
+            <label class="chip"><input type="radio" name="site_type" value="sports league / team"><span>sports league / team</span></label>
+            <label class="chip"><input type="radio" name="site_type" value="personal"><span>personal</span></label>
+            <label class="chip"><input type="radio" name="site_type" value="music / artist"><span>music / artist</span></label>
+            <label class="chip chip-other">
+              <input type="radio" name="site_type" value="something else" id="other-radio">
+              <span><span class="chip-name">something else</span><input class="chip-text" id="other-text" type="text" maxlength="40" placeholder="type what it's about..." aria-label="what kind of site"></span>
+            </label>
+          </div>
+        </div>
+        <label class="field">
+          <span class="field-label">tell me about your site</span>
+          <textarea name="message" rows="2" placeholder="what it's for, pages you need, colors, the vibe..." required></textarea>
+        </label>
+        <!-- spam trap: real people never fill this in -->
+        <input class="trap" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <!-- formsubmit settings: email subject line + tidy table layout -->
+        <input type="hidden" name="_subject" value="new inquiry from days archive">
+        <input type="hidden" name="_template" value="table">
+
+        <button class="inq-send" type="submit">
+          <span class="inq-send-label" id="inq-label">send inquiry</span>
+          <span class="inq-arrow" aria-hidden="true">↗</span>
+        </button>
+        <p class="inq-status" id="inq-status" role="status"></p>
+      </form>
+    </section>
+
+    <!-- music player (stays visible on every page) -->
+    <div class="player reveal" id="player">
+      <p class="player-label"><span class="live-dot" aria-hidden="true"></span>now playing</p>
+      <div class="player-row">
+        <button class="p-play" id="p-play" aria-label="play">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+        </button>
+        <div class="p-meta">
+          <span class="p-title" id="p-title">placeholders</span>
+          <span class="p-artist" id="p-artist"></span>
+        </div>
+        <div class="p-skips">
+          <button class="p-skip" id="p-prev" aria-label="previous track">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM19 5v14L9 12z"/></svg>
+          </button>
+          <button class="p-skip" id="p-next" aria-label="next track">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM5 5v14l10-7z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="wave" id="p-wave" role="slider" tabindex="0" aria-label="seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="wave-bars wave-base"></div>
+        <div class="wave-bars wave-fill"></div>
+      </div>
+      <div class="p-time"><span id="p-cur">0:00</span><span id="p-dur">0:00</span></div>
+      <div class="vol" id="vol">
+        <button class="vol-btn" id="vol-btn" aria-label="mute">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>
+            <path class="wv1" d="M15 9.2a4 4 0 0 1 0 5.6"/>
+            <path class="wv2" d="M17.6 6.8a7.5 7.5 0 0 1 0 10.4"/>
+            <path class="x" d="M15.5 9.5l5 5M20.5 9.5l-5 5"/>
+          </svg>
+        </button>
+        <div class="vol-ticks" id="vol-ticks" role="slider" tabindex="0" aria-label="volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="6"></div>
+        <span class="vol-num" id="vol-num">6</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <span>&copy; <span id="year"></span> day_</span>
+    <span class="sep">/</span>
+    <span>local <span id="clock">--:--</span></span>
+  </footer>
+
+  <!-- hover preview for work entries -->
+  <div class="peek" id="peek" aria-hidden="true">
+    <div class="peek-frame">
+      <img id="peek-img" alt="" hidden>
+      <div class="peek-fallback" id="peek-fallback"></div>
+    </div>
+    <p class="peek-cap" id="peek-cap"></p>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
