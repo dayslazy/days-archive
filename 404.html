@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — days archive</title>
+  <!-- github shows this page for any missing link, at any address, so links here are full paths -->
+  <link rel="icon" href="/days-archive/assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#c9a2ff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #ecebe6;
+      --faint: rgba(236, 235, 230, 0.32);
+      --accent: #c9a2ff;
+      --accent-rgb: 201, 162, 255;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: #000;
+      color: var(--text);
+      font-family: "JetBrains Mono", ui-monospace, Consolas, monospace;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem;
+      padding: 0 16px;
+      text-align: center;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: -50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.06;
+      animation: grain 1s steps(6) infinite;
+      pointer-events: none;
+    }
+    @keyframes grain {
+      0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -3%); }
+      60% { transform: translate(-2%, -1%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); }
+    }
+    .msg {
+      position: relative;
+      margin: 0;
+      min-height: 1.4em;
+      color: var(--accent);
+      font-size: clamp(0.85rem, 3.6vw, 1rem);
+      letter-spacing: 0.14em;
+      text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.35);
+      white-space: nowrap;
+    }
+    .cursor { animation: blink 1.05s steps(1) infinite; margin-left: 0.15em; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .home {
+      position: relative;
+      color: var(--faint);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      opacity: 0;
+      transition: color 0.2s, opacity 0.8s;
+    }
+    .home.is-on { opacity: 1; }
+    .home:hover, .home:focus-visible { color: var(--text); outline: none; }
+    @media (prefers-reduced-motion: reduce) {
+      body::before, .cursor { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <p class="msg"><span id="msg">[ 404 — nothing here ]</span><span class="cursor">_</span></p>
+  <a class="home" id="home" href="/days-archive/">&lt;- back to the archive</a>
+
+  <script>
+    // same gibberish typing as the main site: slow at first, then each
+    // character snaps to the real letter once it's all typed out
+    (() => {
+      const el = document.getElementById("msg");
+      const home = document.getElementById("home");
+      const text = el.textContent;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { home.classList.add("is-on"); return; }
+
+      const GLYPHS = "$%^#@&*!?/\\<>{}[]=+~";
+      const n = text.length, slow = 160, fast = 40, hold = 220, resolve = 35;
+      const at = [];
+      let t = 0;
+      for (let i = 0; i < n; i++) { t += fast + (slow - fast) * (1 - i / (n - 1)) ** 2; at.push(t); }
+      const typedEnd = t + hold;
+
+      el.textContent = "";
+      let junk = [], lastShuffle = -1;
+      const start = performance.now() + 300;
+      const frame = (now) => {
+        const e = now - start;
+        if (e < 0) return requestAnimationFrame(frame);
+        let typed = 0;
+        while (typed < n && at[typed] <= e) typed++;
+        const resolved = e < typedEnd ? 0 : Math.floor((e - typedEnd) / resolve) + 1;
+        const shuffle = Math.floor(e / 60);
+        if (shuffle !== lastShuffle) { junk = Array.from({ length: n }, () => GLYPHS[(Math.random() * GLYPHS.length) | 0]); lastShuffle = shuffle; }
+        let out = "";
+        for (let i = 0; i < typed; i++) out += i < resolved || text[i] === " " ? text[i] : junk[i];
+        el.textContent = out;
+        if (resolved >= n) { el.textContent = text; home.classList.add("is-on"); return; }
+        requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>
