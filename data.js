@@ -29,7 +29,6 @@ window.SITE = {
   // the first one always plays first when someone clicks to enter,
   // then they go in order and loop back. missing files get skipped.
   tracks: [
-    { title: "August 10", artist: "Julie Doiron", src: "assets/music/august-10.mp3" },
     { title: "Convenience", artist: "Jaydes", src: "assets/music/convenience.mp3" },
     // { title: "song name", artist: "artist", src: "assets/music/song.mp3" },
   ],
