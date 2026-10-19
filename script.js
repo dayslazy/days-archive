@@ -444,6 +444,12 @@
     setTimeout(() => gate.remove(), 1200);
   }
 
+  // the menu + player fade in once, on entering. after that, drop the fade
+  // so coming back to the home page shows them straight away.
+  $$(".reveal").forEach((el) =>
+    el.addEventListener("animationend", () => el.classList.remove("reveal"), { once: true })
+  );
+
   gate.addEventListener("click", enter);
   addEventListener("keydown", (e) => {
     if (!entered && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); enter(); }
