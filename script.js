@@ -395,6 +395,19 @@
     document.body.dataset.view = name;
     peek.classList.remove("is-on");
     scrollTo(0, 0);
+    if (name === "home") replayReveal();
+  }
+
+  // safari (and apps that use it, like discord on iphone) doesn't restart the
+  // menu's fade-in when the home page comes back, leaving it invisible.
+  // restart it by hand so every browser replays it the same way.
+  function replayReveal() {
+    if (document.body.classList.contains("is-gated")) return; // first fade-in hasn't happened yet
+    $$(".reveal").forEach((el) => {
+      el.style.animation = "none";
+      void el.offsetWidth; // let the browser register the reset
+      el.style.animation = "";
+    });
   }
   addEventListener("hashchange", route);
   route();
