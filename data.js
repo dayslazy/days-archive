@@ -58,7 +58,7 @@ window.SITE = {
   //   image → a screenshot, e.g. "assets/work/nycc.jpg" (leave "" for a placeholder)
   work: [
     { name: "UFF LEAGUE WEB", kind: "flag football league", year: "10/17/26", url: "https://uffleague.github.io/#/", image: "assets/work/uff.jpg" },
-    { name: "Archived #1", kind: "", year: "", url: "https://dayslazy.github.io/days-archive/my%20website/", image: "assets/work/old-site.jpg?v=2" },
-    { name: "Archived #2", kind: "", year: "", url: "", image: "" },
+    { name: "Old Archive page", kind: "", year: "", url: "https://dayslazy.github.io/days-archive/my%20website/", image: "assets/work/old-site.jpg?v=2" },
+    { name: "Archived #3", kind: "", year: "", url: "", image: "" },
   ],
 };
