@@ -288,15 +288,29 @@
 
   /* ───────── custom background ───────── */
 
+  // while a custom background loads, the scene stays dark and foggy (no
+  // streetlights), then the background fades in. if it fails to load,
+  // the built-in streetlight scene comes back instead.
   const bg = SITE.background || {};
+  const bgMedia = $(".bg-media");
+  const bgReady = (el) => el.classList.add("is-loaded");
+  const bgFailed = (el) => { el.remove(); document.body.classList.remove("has-bg"); };
   if (bg.video) {
+    document.body.classList.add("has-bg");
     const v = Object.assign(document.createElement("video"), {
       src: bg.video, autoplay: true, muted: true, loop: true, playsInline: true,
     });
-    $(".bg-media").append(v);
+    v.addEventListener("loadeddata", () => bgReady(v));
+    v.addEventListener("error", () => bgFailed(v));
+    bgMedia.append(v);
   } else if (bg.image) {
-    const img = Object.assign(new Image(), { src: bg.image, alt: "" });
-    $(".bg-media").append(img);
+    document.body.classList.add("has-bg");
+    const img = new Image();
+    img.alt = "";
+    img.addEventListener("load", () => bgReady(img));
+    img.addEventListener("error", () => bgFailed(img));
+    img.src = bg.image;
+    bgMedia.append(img);
   }
 
   /* ───────── work list ───────── */
